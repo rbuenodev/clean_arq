@@ -3,6 +3,7 @@ import { Sequelize } from "sequelize-typescript";
 import CustomerRepository from "../../../infrastructure/customer/repository/sequelize/customer.repository";
 import Customer from "../../../domain/customer/entity/customer";
 import Address from "../../../domain/customer/value-object/address";
+import FindCustomerUseCase from "./find.customer.usecase";
 
 describe("test find customer use case", () => {
   let sequelize: Sequelize;
@@ -27,16 +28,17 @@ describe("test find customer use case", () => {
     const customerRepository = new CustomerRepository();
     const usecase = new FindCustomerUseCase(customerRepository);
 
-    const customer = new Customer("123", "john");
-    const address = new Address("street", 123, "city", "zip");
+    const customer = new Customer("123", "rich");
+    const address = new Address("street", 123, "zip", "city");
     customer.changeAddress(address);
+
     await customerRepository.create(customer);
 
     const input = { id: "123" };
 
     const output = {
       id: "123",
-      name: "john",
+      name: "rich",
       address: {
         street: "street",
         city: "city",
@@ -45,7 +47,7 @@ describe("test find customer use case", () => {
       },
     };
 
-    const result = usecase.execute(input);
+    const result = await usecase.execute(input);
     expect(result).toEqual(output);
   });
 });
