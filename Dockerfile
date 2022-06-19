@@ -14,6 +14,10 @@ RUN npm i -D jest @types/jest ts-node --save-dev
 
 RUN npm i -D @swc/jest @swc/cli @swc/core
 
+#RUN npm i express @types/express dotenv 
+#RUN npm i nodemon
+#RUN npm i -D @types/supertest
+
 USER node
 
 WORKDIR /home/node/app
