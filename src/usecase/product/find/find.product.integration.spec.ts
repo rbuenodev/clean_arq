@@ -46,9 +46,11 @@ describe("Integration test to find a product", () => {
     const productRepository = new ProductRepository();
 
     const usecase = new ProductFindUseCase(productRepository);
+
     const input = { id: "1234" };
-    expect(() => {
-      return usecase.execute(input);
+
+    expect(async () => {
+      return await usecase.execute(input);
     }).rejects.toThrow("Product not found");
   });
 });
